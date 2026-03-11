@@ -1,5 +1,5 @@
 # AuditShield Live - CMS Audit Execution Intelligence
-
+![CI](https://github.com/reichert-science-intelligence/auditshield-live/actions/workflows/ci.yml/badge.svg)
 **Developer:** Robert Reichert  
 **Status:** Production-Ready Demo  
 **Live Demo:** [https://tinyurl.com/2vj79bem](https://tinyurl.com/2vj79bem)
