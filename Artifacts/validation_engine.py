@@ -8,9 +8,8 @@ Purpose: Validate HEDIS chart documentation against NCQA requirements
 
 import pandas as pd
 import json
-from typing import Dict, List, Tuple
+from typing import Dict
 from datetime import datetime
-import sys
 
 class HEDISValidationEngine:
     """Core validation engine for HEDIS chart audit"""
@@ -427,20 +426,20 @@ class HEDISValidationEngine:
         print("VALIDATION SUMMARY")
         print("=" * 70)
         print(f"Total Charts Validated: {len(results_df)}")
-        print(f"Compliant Charts: {len(results_df[results_df['compliant']==True])} ({len(results_df[results_df['compliant']==True])/len(results_df)*100:.1f}%)")
-        print(f"Non-Compliant Charts: {len(results_df[results_df['compliant']==False])} ({len(results_df[results_df['compliant']==False])/len(results_df)*100:.1f}%)")
-        print(f"\nRisk Distribution:")
+        print(f"Compliant Charts: {len(results_df[results_df['compliant']])} ({len(results_df[results_df['compliant']])/len(results_df)*100:.1f}%)")
+        print(f"Non-Compliant Charts: {len(results_df[not results_df['compliant']])} ({len(results_df[not results_df['compliant']])/len(results_df)*100:.1f}%)")
+        print("\nRisk Distribution:")
         for level in ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']:
             count = len(results_df[results_df['risk_level']==level])
             if count > 0:
                 print(f"  {level}: {count} charts ({count/len(results_df)*100:.1f}%)")
         
-        print(f"\nProjected Star Rating Impact:")
+        print("\nProjected Star Rating Impact:")
         total_impact = results_df['star_rating_impact'].sum()
         print(f"  Total Impact: {total_impact:.4f} points")
         print(f"  Average per Chart: {total_impact/len(results_df):.6f} points")
         
-        print(f"\nTop 5 Charts by Star Rating Impact:")
+        print("\nTop 5 Charts by Star Rating Impact:")
         top_charts = results_df.nlargest(5, 'star_rating_impact')[['chart_id', 'measure_code', 'risk_level', 'star_rating_impact']]
         for _, chart in top_charts.iterrows():
             print(f"  {chart['chart_id']} ({chart['measure_code']}): {chart['risk_level']} - Impact: {chart['star_rating_impact']:.4f}")
@@ -458,8 +457,8 @@ class HEDISValidationEngine:
                 'ncqa_specifications_version': 'HEDIS 2026'
             },
             'executive_summary': {
-                'overall_compliance_rate': f"{len(results_df[results_df['compliant']==True])/len(results_df)*100:.1f}%",
-                'charts_requiring_remediation': len(results_df[results_df['compliant']==False]),
+                'overall_compliance_rate': f"{len(results_df[results_df['compliant']])/len(results_df)*100:.1f}%",
+                'charts_requiring_remediation': len(results_df[not results_df['compliant']]),
                 'critical_risk_charts': len(results_df[results_df['risk_level']=='CRITICAL']),
                 'projected_star_rating_impact': round(results_df['star_rating_impact'].sum(), 4)
             },
@@ -490,8 +489,8 @@ class HEDISValidationEngine:
             measure_df = results_df[results_df['measure_code'] == measure]
             report['measure_performance'][measure] = {
                 'total_charts': len(measure_df),
-                'compliant_charts': len(measure_df[measure_df['compliant']==True]),
-                'compliance_rate': f"{len(measure_df[measure_df['compliant']==True])/len(measure_df)*100:.1f}%",
+                'compliant_charts': len(measure_df[measure_df['compliant']]),
+                'compliance_rate': f"{len(measure_df[measure_df['compliant']])/len(measure_df)*100:.1f}%",
                 'critical_risk_count': len(measure_df[measure_df['risk_level']=='CRITICAL']),
                 'star_rating_impact': round(measure_df['star_rating_impact'].sum(), 4)
             }
@@ -525,7 +524,7 @@ def main():
     print("  ✓ validation_results.csv")
     
     # Generate audit report
-    report = engine.generate_audit_report(results_df)
+    engine.generate_audit_report(results_df)
     
     print("\n" + "=" * 70)
     print("PHASE 1 FOUNDATION - COMPLETE")

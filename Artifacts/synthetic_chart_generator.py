@@ -11,7 +11,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import json
 import random
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 
 # Set random seed for reproducibility
 np.random.seed(42)
@@ -401,16 +401,16 @@ class HEDISChartGenerator:
         print("="*60)
         print(f"Total Members: {len(demographics)}")
         print(f"Total Charts: {len(chart_df)}")
-        print(f"\nGap Distribution:")
+        print("\nGap Distribution:")
         print(f"  Complete (Audit-Ready): {len(chart_df[chart_df['gap_type']=='complete'])} ({len(chart_df[chart_df['gap_type']=='complete'])/len(chart_df)*100:.1f}%)")
         print(f"  Minor Gaps: {len(chart_df[chart_df['gap_type']=='minor_gap'])} ({len(chart_df[chart_df['gap_type']=='minor_gap'])/len(chart_df)*100:.1f}%)")
         print(f"  Major Gaps: {len(chart_df[chart_df['gap_type']=='major_gap'])} ({len(chart_df[chart_df['gap_type']=='major_gap'])/len(chart_df)*100:.1f}%)")
-        print(f"\nRisk Level Distribution:")
+        print("\nRisk Level Distribution:")
         for level in ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']:
             count = len(chart_df[chart_df['risk_level']==level])
             if count > 0:
                 print(f"  {level}: {count} charts ({count/len(chart_df)*100:.1f}%)")
-        print(f"\nMeasure Distribution:")
+        print("\nMeasure Distribution:")
         for measure in chart_df['measure_code'].value_counts().head(5).items():
             print(f"  {measure[0]}: {measure[1]} charts")
         

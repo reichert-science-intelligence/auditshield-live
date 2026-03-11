@@ -10,7 +10,7 @@ Accuracy Target: Reduce false positives/negatives by 95%
 
 import pandas as pd
 import json
-from typing import Dict, List, Tuple, Optional
+from typing import Dict
 from datetime import datetime
 
 class SelfCorrectionEngine:
@@ -255,7 +255,7 @@ class SelfCorrectionEngine:
             
             corrected['corrections_applied'].append({
                 'correction': f'Confirmed non-compliant: Missing {missing_component}',
-                'reason': f'Most common CBP audit failure (30% prevalence)',
+                'reason': 'Most common CBP audit failure (30% prevalence)',
                 'severity': 'CRITICAL'
             })
             

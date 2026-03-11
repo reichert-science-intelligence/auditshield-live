@@ -9,7 +9,7 @@ Processing Target: <1.2 seconds per chart
 
 import pandas as pd
 import re
-from typing import Dict, List, Tuple, Optional
+from typing import Dict
 from datetime import datetime
 import json
 
@@ -408,7 +408,7 @@ def main():
     print(f"  Processed {len(charts_df)}/{len(charts_df)} charts ✓")
     
     # Convert to DataFrame
-    results_df = pd.DataFrame(extraction_results)
+    pd.DataFrame(extraction_results)
     
     # Performance statistics
     perf_stats = engine.get_performance_stats()
@@ -442,7 +442,7 @@ def main():
     
     if all_confidence_scores:
         import statistics
-        print(f"\nConfidence Score Statistics:")
+        print("\nConfidence Score Statistics:")
         print(f"  Average Confidence: {statistics.mean(all_confidence_scores):.3f}")
         print(f"  Median Confidence: {statistics.median(all_confidence_scores):.3f}")
         print(f"  Min/Max Confidence: {min(all_confidence_scores):.3f} / {max(all_confidence_scores):.3f}")
@@ -453,7 +453,7 @@ def main():
         for method in result['extraction_methods'].values():
             extraction_methods_count[method] = extraction_methods_count.get(method, 0) + 1
     
-    print(f"\nExtraction Methods Used:")
+    print("\nExtraction Methods Used:")
     for method, count in sorted(extraction_methods_count.items(), key=lambda x: x[1], reverse=True):
         print(f"  {method}: {count} entities ({count/total_entities*100:.1f}%)")
     

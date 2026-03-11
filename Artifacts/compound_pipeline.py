@@ -9,7 +9,7 @@ Target Performance: <2.5 seconds per chart, 98.7% accuracy
 
 import pandas as pd
 import json
-from typing import Dict, List
+from typing import Dict
 from datetime import datetime
 import sys
 
@@ -354,31 +354,31 @@ def main():
     
     summary = exec_summary['executive_summary']
     
-    print(f"\nAudit Completion:")
+    print("\nAudit Completion:")
     print(f"  Total Charts Reviewed: {summary['audit_completion']['total_charts_reviewed']}")
     print(f"  Audit-Ready Charts: {summary['audit_completion']['audit_ready_charts']}")
     print(f"  Compliance Rate: {summary['audit_completion']['compliance_rate']}")
     print(f"  Require Remediation: {summary['audit_completion']['charts_requiring_remediation']}")
     
-    print(f"\nRisk Stratification:")
+    print("\nRisk Stratification:")
     print(f"  CRITICAL: {summary['risk_stratification']['critical_risk']} charts")
     print(f"  HIGH: {summary['risk_stratification']['high_risk']} charts")
     print(f"  MEDIUM: {summary['risk_stratification']['medium_risk']} charts")
     print(f"  LOW: {summary['risk_stratification']['low_risk']} charts")
     
-    print(f"\nTime Savings:")
+    print("\nTime Savings:")
     print(f"  Traditional Audit: {summary['time_savings']['traditional_audit_time']}")
     print(f"  AuditShield Time: {summary['time_savings']['auditshield_time']}")
     print(f"  Time Saved: {summary['time_savings']['time_saved']}")
     print(f"  Efficiency Gain: {summary['time_savings']['efficiency_gain']}")
     
-    print(f"\nAccuracy Achievement:")
+    print("\nAccuracy Achievement:")
     print(f"  Baseline Accuracy: {summary['accuracy_achievement']['baseline_accuracy']}")
     print(f"  Compound Accuracy: {summary['accuracy_achievement']['compound_accuracy']}")
     print(f"  Target: {summary['accuracy_achievement']['target_accuracy']}")
     print(f"  Target Achieved: {'✓ YES' if summary['accuracy_achievement']['target_achieved'] else '✗ NO'}")
     
-    print(f"\nCost Impact:")
+    print("\nCost Impact:")
     print(f"  Traditional Labor Cost: {summary['cost_impact']['labor_cost_traditional']}")
     print(f"  AuditShield Labor Cost: {summary['cost_impact']['labor_cost_auditshield']}")
     print(f"  Labor Savings: {summary['cost_impact']['labor_savings']}")
@@ -460,7 +460,7 @@ def main():
     print("6. ✓ Executive summary with ROI metrics")
     print("\nPerformance Achievement:")
     perf = exec_summary['performance_details']['pipeline_performance']
-    print(f"  Target: <2,500ms per chart")
+    print("  Target: <2,500ms per chart")
     print(f"  Actual: {perf['average_time_ms']:.2f}ms per chart")
     print(f"  Achievement: {perf['target_achievement']}")
     print(f"  Accuracy: {exec_summary['performance_details']['accuracy_metrics']['final_accuracy']}")

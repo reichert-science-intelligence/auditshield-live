@@ -8,9 +8,8 @@ Processing Target: <0.5ms per query
 """
 
 import json
-from typing import Dict, List
+from typing import Dict
 from datetime import datetime
-import pandas as pd
 
 class AgenticRAGCoordinator:
     """
