@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install ruff mypy pip-audit pytest pytest-cov
+          pip install shiny anthropic supabase pandas plotnine \
+            chromadb sentence-transformers python-dotenv
+
+      - name: Ruff lint
+        run: ruff check Artifacts/project/auditshield/
+
+      - name: Mypy type-check
+        run: mypy Artifacts/project/auditshield/ --config-file pyproject.toml
+
+      - name: Pytest
+        run: |
+          PYTHONPATH=Artifacts/project/auditshield pytest \
+            Artifacts/project/auditshield/tests/ -v --tb=short
+
+      - name: Security audit
+        run: pip-audit
