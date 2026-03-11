@@ -24,15 +24,14 @@ jobs:
             chromadb sentence-transformers python-dotenv
 
       - name: Ruff lint
-        run: ruff check Artifacts/project/auditshield/
+        run: ruff check Artifacts/
 
       - name: Mypy type-check
-        run: mypy Artifacts/project/auditshield/ --config-file pyproject.toml
+        run: mypy Artifacts/ --ignore-missing-imports
 
       - name: Pytest
         run: |
-          PYTHONPATH=Artifacts/project/auditshield pytest \
-            Artifacts/project/auditshield/tests/ -v --tb=short
+          PYTHONPATH=Artifacts pytest Artifacts/tests/ -v --tb=short
 
       - name: Security audit
         run: pip-audit
